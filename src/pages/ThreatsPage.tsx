@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, TrendingUp, X, Eye, Brain } from 'lucide-react';
-import { ImpossibleTravelWidget, AppInstallSpikeWidget, OSOutdatedWidget, CompromisedStatusWidget, AnomalousSequenceWidget, AbnormalTimeAccessWidget } from '../components/ThreatEvidence/EvidenceWidgets';
+import { ImpossibleTravelWidget, AppInstallSpikeWidget, OSOutdatedWidget, CompromisedStatusWidget, AnomalousSequenceWidget, AbnormalTimeAccessWidget, DataUsageAnomalyWidget, VulnerabilityWidget, SecurityComplianceWidget, ProhibitedAppWidget } from '../components/ThreatEvidence/EvidenceWidgets';
 import type { Alert } from '../data/mockData';
 
 export const ThreatsPage = () => {
@@ -36,6 +36,12 @@ export const ThreatsPage = () => {
         if (ruleName.includes('OS Version') || ruleName.includes('OS 버전')) return <OSOutdatedWidget />;
         if (ruleName.includes('Compromised') || ruleName.includes('무결성') || ruleName.includes('Rooting') || ruleName.includes('Jailbreak')) return <CompromisedStatusWidget />;
         if (ruleName.includes('Sequence') || ruleName.includes('순서')) return <AnomalousSequenceWidget />;
+
+        // New Widgets
+        if (ruleName.includes('Data Usage') || ruleName.includes('데이터 과다')) return <DataUsageAnomalyWidget />;
+        if (ruleName.includes('Vulnerability') || ruleName.includes('CVE') || ruleName.includes('취약점')) return <VulnerabilityWidget details={data.details} />;
+        if (ruleName.includes('Prohibited') || ruleName.includes('금지된') || ruleName.includes('Blacklisted')) return <ProhibitedAppWidget details={data.details} />;
+        if (ruleName.includes('Encryption') || ruleName.includes('USB') || ruleName.includes('Policy') || ruleName.includes('Compliance') || ruleName.includes('암호화') || ruleName.includes('정책')) return <SecurityComplianceWidget ruleName={ruleName} details={data.details} />;
 
         return (
             <div className="p-8 text-center text-gray-500 bg-gray-50 dark:bg-dark-800 rounded-lg border border-dashed border-gray-300 dark:border-dark-700">
