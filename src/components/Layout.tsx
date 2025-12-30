@@ -67,26 +67,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </Link>
                         );
                     })}
-                </nav>
 
-                {/* Footer with Theme Toggle */}
-                <div className="p-4 border-t border-gray-200 dark:border-dark-800 space-y-3">
+                    {/* Dark Mode Toggle as Menu Item */}
                     <button
                         onClick={toggleTheme}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 hover:text-gray-900 dark:hover:text-gray-200"
                     >
                         {isDark ? (
-                            <>
-                                <Sun className="w-4 h-4" />
-                                <span className="text-sm">라이트 모드</span>
-                            </>
+                            <Sun className="w-5 h-5" />
                         ) : (
-                            <>
-                                <Moon className="w-4 h-4" />
-                                <span className="text-sm">다크 모드</span>
-                            </>
+                            <Moon className="w-5 h-5" />
                         )}
+                        <div>
+                            <div className="font-medium">{isDark ? '라이트 모드' : '다크 모드'}</div>
+                        </div>
                     </button>
+                </nav>
+
+                {/* Footer Version Info */}
+                <div className="p-4 border-t border-gray-200 dark:border-dark-800">
                     <div className="text-xs text-gray-500 text-center">
                         v1.0.0 | Air-Gapped Mode
                     </div>
