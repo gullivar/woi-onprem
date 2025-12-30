@@ -1,5 +1,5 @@
-import { MapPin, ArrowRight, AlertTriangle, Shield, Smartphone, Activity } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, ReferenceLine } from 'recharts';
+import { MapPin, ArrowRight, AlertTriangle, Shield, Smartphone, Activity, Clock } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, ReferenceLine, LineChart, Line, Legend } from 'recharts';
 
 // 1. Impossible Travel Widget
 export const ImpossibleTravelWidget = ({ data }: { data: any }) => {
@@ -7,7 +7,7 @@ export const ImpossibleTravelWidget = ({ data }: { data: any }) => {
         <div className="h-64 bg-gray-100 dark:bg-dark-800 rounded-lg relative overflow-hidden border border-gray-200 dark:border-dark-700">
             {/* Mock Map Background */}
             <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url(https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-            
+
             <div className="absolute inset-0 flex items-center justify-center">
                 <div className="flex items-center gap-8">
                     {/* Origin */}
@@ -59,7 +59,7 @@ export const AppInstallSpikeWidget = () => {
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                     <XAxis dataKey="day" stroke="#64748b" style={{ fontSize: '10px' }} />
                     <YAxis stroke="#64748b" style={{ fontSize: '10px' }} />
-                    <Tooltip 
+                    <Tooltip
                         contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#fff' }}
                         cursor={{ fill: '#334155', opacity: 0.2 }}
                     />
@@ -172,6 +172,54 @@ export const AnomalousSequenceWidget = () => {
                     <ArrowRight className="w-4 h-4 text-red-500" />
                     <div className="px-3 py-1 bg-red-100 text-red-700 rounded border border-red-200 text-sm font-bold ring-2 ring-red-500/20">Download DB</div>
                 </div>
+            </div>
+        </div>
+    );
+};
+
+// 6. Abnormal Time Access Widget
+export const AbnormalTimeAccessWidget = () => {
+    // 0~23 hour data
+    const data = Array.from({ length: 24 }, (_, i) => ({
+        hour: i.toString().padStart(2, '0'),
+        userAvg: i >= 9 && i <= 18 ? Math.floor(Math.random() * 30) + 50 : Math.floor(Math.random() * 5), // Normal working hours
+        orgAvg: i >= 8 && i <= 19 ? Math.floor(Math.random() * 40) + 40 : Math.floor(Math.random() * 10), // Wider org hours
+    }));
+
+    // Alert happened at 03:00 AM (Index 3)
+    const alertHour = 3;
+
+    return (
+        <div className="h-80">
+            <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-gray-500" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Activity Time Distribution (24h)</span>
+                </div>
+                <div className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded border border-red-200 font-semibold">
+                    Alert Time: 03:00 AM
+                </div>
+            </div>
+
+            <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                    <XAxis dataKey="hour" stroke="#64748b" style={{ fontSize: '10px' }} tickFormatter={(val) => `${val}:00`} />
+                    <YAxis stroke="#64748b" style={{ fontSize: '10px' }} />
+                    <Tooltip
+                        contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#fff' }}
+                        labelFormatter={(val) => `${val}:00`}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="orgAvg" name="Organization Avg" stroke="#94a3b8" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+                    <Line type="monotone" dataKey="userAvg" name="User Usual Pattern" stroke="#3b82f6" strokeWidth={2} dot={false} fill="url(#colorUser)" />
+
+                    {/* Highlight Alert Time */}
+                    <ReferenceLine x="03" stroke="red" label={{ value: 'DETECTED', position: 'top', fill: 'red', fontSize: 12, fontWeight: 'bold' }} strokeDasharray="3 3" />
+                </LineChart>
+            </ResponsiveContainer>
+            <div className="text-center text-sm text-gray-500 mt-2">
+                User accessed at <strong>03:00 AM</strong>, which deviates significantly from their usual <strong>09:00 - 18:00</strong> pattern.
             </div>
         </div>
     );

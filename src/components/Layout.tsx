@@ -21,7 +21,7 @@ interface LayoutProps {
 
 const navigation = [
     { name: '대시보드', nameEn: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: '사용자', nameEn: 'Users', href: '/users', icon: UsersIcon },
+    { name: '위험 사용자', nameEn: 'Risk Users', href: '/users', icon: UsersIcon },
     { name: '위협 탐지', nameEn: 'Threats', href: '/threats', icon: AlertTriangle },
     { name: '탐지 규칙', nameEn: 'Rules', href: '/rules', icon: FileCode },
     { name: '자동화', nameEn: 'Automation', href: '/automation', icon: Workflow },

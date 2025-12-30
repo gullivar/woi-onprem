@@ -61,7 +61,7 @@ export const Users = () => {
         <div className="p-6 max-w-7xl mx-auto">
             {/* Header */}
             <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">User Management</h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">위험 사용자 관리</h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Monitor and manage user risk profiles</p>
             </div>
 

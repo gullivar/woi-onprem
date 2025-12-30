@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, TrendingUp, X, Eye, Brain } from 'lucide-react';
-import { ImpossibleTravelWidget, AppInstallSpikeWidget, OSOutdatedWidget, CompromisedStatusWidget, AnomalousSequenceWidget } from '../components/ThreatEvidence/EvidenceWidgets';
+import { ImpossibleTravelWidget, AppInstallSpikeWidget, OSOutdatedWidget, CompromisedStatusWidget, AnomalousSequenceWidget, AbnormalTimeAccessWidget } from '../components/ThreatEvidence/EvidenceWidgets';
 import type { Alert } from '../data/mockData';
 
 export const ThreatsPage = () => {
@@ -31,6 +31,7 @@ export const ThreatsPage = () => {
 
     const renderEvidenceWidget = (ruleName: string, data: any) => {
         if (ruleName.includes('Impossible Travel') || ruleName.includes('물리적 불가능')) return <ImpossibleTravelWidget data={data} />;
+        if (ruleName.includes('Abnormal Time') || ruleName.includes('비정상 시간대')) return <AbnormalTimeAccessWidget />;
         if (ruleName.includes('App Install') || ruleName.includes('앱 설치')) return <AppInstallSpikeWidget />;
         if (ruleName.includes('OS Version') || ruleName.includes('OS 버전')) return <OSOutdatedWidget />;
         if (ruleName.includes('Compromised') || ruleName.includes('무결성') || ruleName.includes('Rooting') || ruleName.includes('Jailbreak')) return <CompromisedStatusWidget />;
